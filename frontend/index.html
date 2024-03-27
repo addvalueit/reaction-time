@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoke Lambda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #responseContainer {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            overflow: auto;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #333;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Invoke Lambda</h2>
+        <button id="invokeButton">Invoke Lambda</button>
+        <button id="invokeButtonKevin">Invoke Lambda Kevin</button>
+        <div id="spinner" class="spinner hidden"></div>
+        <div id="responseContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const invokeButton = document.getElementById("invokeButton");
+            const spinner = document.getElementById("spinner");
+            const responseContainer = document.getElementById("responseContainer");
+
+            invokeButton.addEventListener("click", function() {
+                spinner.classList.remove("hidden");
+                responseContainer.innerHTML = ""; // Clear previous response
+
+                fetch('http://localhost:4566/2015-03-31/functions/inserimento_api/invocations', {
+                    method: 'POST',
+                    body: JSON.stringify({ key: 'value' }), // Insert your Lambda function input data here
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    const statusCode = response.status;
+                    responseContainer.innerHTML = "Status Code: " + statusCode;
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    const responseBody = JSON.stringify(data, null, 2); // Pretty print JSON
+                    responseContainer.innerHTML += "<br>Response:<pre>" + responseBody + "</pre>";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    responseContainer.innerHTML = "Error: " + error.message;
+                })
+                .finally(() => {
+                    spinner.classList.add("hidden");
+                });
+            });
+       
+            const invokeButtonKevin = document.getElementById("invokeButtonKevin");
+
+            invokeButtonKevin.addEventListener("click", function() {
+                spinner.classList.remove("hidden");
+                responseContainer.innerHTML = ""; // Clear previous response
+
+                fetch('http://localhost:4566/2015-03-31/functions/lambda-hello-kevin/invocations', {
+                    method: 'POST',
+                    body: JSON.stringify({ key: 'kevin' }), // Insert your Lambda function input data here
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    const statusCode = response.status;
+                    responseContainer.innerHTML = "Status Code: " + statusCode;
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    const responseBody = JSON.stringify(data, null, 2); // Pretty print JSON
+                    responseContainer.innerHTML += "<br>Response:<pre>" + responseBody + "</pre>";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    responseContainer.innerHTML = "Error: " + error.message;
+                })
+                .finally(() => {
+                    spinner.classList.add("hidden");
+                });
+            });
+        });
+
+        
+    </script>
+</body>
+</html>

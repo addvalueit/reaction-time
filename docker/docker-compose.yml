@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: reactionTime
+    restart: unless-stopped
+    ports:
+      - "55432:5432"
+    volumes:
+       - ./db-data/postgres/:/var/lib/postgresql/data/
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./db-data/pgadmin/:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+
+  localstack:
+    image: localstack/localstack:latest
+    restart: always
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      - DEBUG=${DEBUG:-0}
+      - DISABLE_CORS_CHECKS=1 
+    volumes:
+      - ./db-data/localstack:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
