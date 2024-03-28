@@ -65,12 +65,16 @@
         <h2>Invoke Lambda</h2>
         <button id="invokeButton">Invoke Lambda</button>
         <button id="invokeButtonKevin">Invoke Lambda Kevin</button>
+        <button id="invokeButtonLogin">Invoke Lambda Login</button>
         <button id="invokeButtonInsert">Invoke Lambda Insert</button>
         <div id="spinner" class="spinner hidden"></div>
         <div id="responseContainer"></div>
     </div>
 
     <script>
+
+        let userId;
+
         document.addEventListener("DOMContentLoaded", function() {
             const invokeButton = document.getElementById("invokeButton");
             const spinner = document.getElementById("spinner");
@@ -138,6 +142,45 @@
                 });
             });
 
+            const invokeButtonLogin = document.getElementById("invokeButtonLogin");
+
+
+            invokeButtonLogin.addEventListener("click", function() {
+                spinner.classList.remove("hidden");
+                responseContainer.innerHTML = ""; // Clear previous response
+
+                const data = {
+                    "name": "nicholas",
+                };
+
+                fetch('http://localhost:4566/2015-03-31/functions/login_api/invocations', {
+                    method: 'POST',
+                    body: JSON.stringify(data), // Insert your Lambda function input data here
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        const statusCode = response.status;
+                        responseContainer.innerHTML = "Status Code: " + statusCode;
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        console.log(data["user-id"])
+                        userId = data["user-id"]
+                        const responseBody = JSON.stringify(data, null, 2); // Pretty print JSON
+                        responseContainer.innerHTML += "<br>Response:<pre>" + responseBody + "</pre>";
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        responseContainer.innerHTML = "Error: " + error.message;
+                    })
+                    .finally(() => {
+                        spinner.classList.add("hidden");
+                    });
+            });
+
             const invokeButtonInsert = document.getElementById("invokeButtonInsert");
 
 
@@ -146,7 +189,7 @@
                 responseContainer.innerHTML = ""; // Clear previous response
 
                 const data = {
-                    "user-id": 1,
+                    "user-id": userId,
                     "time": 200
                 };
 
