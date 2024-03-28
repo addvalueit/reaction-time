@@ -1,10 +1,6 @@
+encryptionsalt: v1:ZxBEt5gffyw=:v1:wDthF4LWV+bUO7On:sCr+QxZCGbcT/StP61ql7chAyn2mCw==
 config:
-  aws:region: us-east-1
   aws:accessKey: test
-  aws:s3UsePathStyle: "true"
-  aws:secretKey: test
-  aws:skipCredentialsValidation: "true"
-  aws:skipRequestingAccountId: "true"
   aws:endpoints:
     - accessanalyzer: http://localhost:4566
     - account: http://localhost:4566
@@ -279,3 +275,8 @@ config:
     - worklink: http://localhost:4566
     - workspaces: http://localhost:4566
     - xray: http://localhost:4566
+  aws:region: us-east-1
+  aws:s3UsePathStyle: "true"
+  aws:secretKey: test
+  aws:skipCredentialsValidation: "true"
+  aws:skipRequestingAccountId: "true"
