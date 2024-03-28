@@ -7,7 +7,7 @@ LAMBDA_ZIP=inserimento.zip
 RUNTIME=python3.8
 HANDLER=inserimento.lambda_handler
 
-zip inserimento.zip inserimento.py
+zip inserimento.zip inserimento.py libraries/*
 
 function fail() {
     echo $2
