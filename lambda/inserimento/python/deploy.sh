@@ -7,7 +7,16 @@ LAMBDA_ZIP=../../zips/inserimento.zip
 RUNTIME=python3.8
 HANDLER=inserimento.lambda_handler
 
-zip ${LAMBDA_ZIP} inserimento.py libraries/*
+# zip ${LAMBDA_ZIP} inserimento.py my-deployment-package.zip
+
+#Install packages with pip install --target ./package <packagename>
+#example pip install --target ./package requests
+
+
+zip -g my-deployment-package.zip inserimento.py psycopg2
+
+mv my-deployment-package.zip ${LAMBDA_ZIP}
+
 
 function fail() {
     echo $2
