@@ -3,16 +3,18 @@
 API_NAME=inserimento_api
 REGION=us-east-1
 STAGE=test
-LAMBDA_ZIP=inserimento.zip
+LAMBDA_ZIP=../../zips/inserimento.zip
 RUNTIME=python3.8
 HANDLER=inserimento.lambda_handler
 
-zip inserimento.zip inserimento.py
+zip ${LAMBDA_ZIP} inserimento.py libraries/*
 
 function fail() {
     echo $2
     exit $1
 }
+
+awslocal lambda delete-function --function-name ${API_NAME}
 
 awslocal lambda create-function \
     --region ${REGION} \
