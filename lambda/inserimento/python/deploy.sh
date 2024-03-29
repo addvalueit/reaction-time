@@ -13,7 +13,7 @@ HANDLER=inserimento.lambda_handler
 #example pip install --target ./package requests
 
 
-zip -g my-deployment-package.zip inserimento.py psycopg2
+# zip -r -g my-deployment-package.zip inserimento.py package
 
 mv my-deployment-package.zip ${LAMBDA_ZIP}
 
