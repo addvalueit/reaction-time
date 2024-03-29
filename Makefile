@@ -54,5 +54,5 @@ lambda_buid_deploy_all_pyhton_lambdas: lambda_build_deploy_inserimento_python la
 
 run_frontend:
 	@echo Starting frontend...
-	cd frontend && ng serve --open
+	cd frontend/reaction-time && ng serve --open
 	@echo Done!
