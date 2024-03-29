@@ -40,7 +40,7 @@ export class TimeTableComponent implements OnInit {
         let timeArray = Object.values(this.response.body)
         this.leaderboard = timeArray.map((item: any) => {
           return {
-            name: item.user_id,
+            name: item.name,
             time: item.time
           }
         })
