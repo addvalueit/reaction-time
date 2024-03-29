@@ -56,3 +56,8 @@ run_frontend:
 	@echo Starting frontend...
 	cd frontend/reaction-time && ng serve --open --live-reload
 	@echo Done!
+
+setup:
+	@echo Inizio setup ambiente
+	cd docker && docker compose up
+	@echo Fine setup!
