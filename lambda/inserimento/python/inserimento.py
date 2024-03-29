@@ -17,9 +17,9 @@ class ReactionTime:
             "user_id": self.user_id
         }
 
-def lambda_handler(event, context):
+def lambda_handler(event: dict, context):
     with psycopg2.connect(dsn=os.getenv("DATABASE_DSN")) as conn:
-        insert_reaction_time(1, 10.5, conn)  # Esempio di dati fittizi
+        insert_reaction_time(event["user-id"], event["time"], conn)  # Esempio di dati fittizi
 
 
 def insert_reaction_time(user_id, reaction_time, db_connection):
