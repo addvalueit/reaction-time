@@ -22,3 +22,16 @@ localstack_update: lambda_build_inserimento_go lambda_build_login_go
 	@echo Updating localstack
 	cd IAC/pulumi && pulumi up
 	@echo Done!
+
+lambda_build_inserimento_python:
+	@echo Building lambda inserimento Python...
+	cd lambda/inserimento/python && bash prepareZip.sh
+	@echo Done!
+
+lambda_deploy_inserimento_python:
+	@echo Deploying lambda inserimento Python...
+	cd lambda/inserimento/python && bash deploy.sh
+	@echo Done!
+
+lambda_build_deploy_inserimento_python: lambda_build_inserimento_python lambda_deploy_inserimento_python
+	@echo Done!

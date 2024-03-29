@@ -4,7 +4,7 @@ from datetime import datetime
 
 def lambda_handler(event, context):
     # Configurare i parametri della connessione al database
-    db_host = 'postgres'
+    db_host = 'postgres' # 'localhost' for local debug / 'postgres' for production
     db_name = 'reactionTime'
     db_user = 'postgres'
     db_password = 'password'
@@ -14,19 +14,22 @@ def lambda_handler(event, context):
         dbname=db_name,
         user=db_user,
         password=db_password,
-        host=db_host
+        host=db_host,
+        port=5432
+        # ,port=55432 for local debug / port=5432 for production
     )
     
     # Inserimento di dati fittizi
     insert_reaction_time(1, 10.5, conn)  # Esempio di dati fittizi
     
-    var = get_all_reaction_times(conn)
+    reaction_times = get_all_reaction_times(conn)
 
     # Chiusura della connessione
     conn.close()
+
     
     return {
-        json.dumps({"tempo": var})
+        json.dumps(reaction_times, default=str)
     }
 
 
@@ -55,4 +58,4 @@ def insert_reaction_time(user_id, reaction_time, db_connection):
         print("Errore durante l'inserimento dei dati:", e)
 
 
-lambda_handler(None, None)
+print(lambda_handler(None, None))
