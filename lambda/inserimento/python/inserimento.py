@@ -11,6 +11,14 @@ class ReactionTime:
 
     def toJSON(self):
         return json.dumps({"id": self.id, "time": self.time, "tms_insert": self.tms_insert.strftime("%Y-%m-%d %H:%M:%S"), "user_id": self.user_id})
+    
+    def toDict(self):
+        return {
+            "id": self.id,
+            "time": self.time,
+            "tms_insert": self.tms_insert.strftime("%Y-%m-%d %H:%M:%S"),
+            "user_id": self.user_id
+        }
 
 def lambda_handler(event, context):
     # Configurare i parametri della connessione al database
@@ -37,7 +45,7 @@ def lambda_handler(event, context):
     response = {}
 
     for i, time in enumerate(reaction_times):
-        response[i] = ReactionTime(time[0], time[1], time[2], time[3]).toJSON()
+        response[i] = ReactionTime(time[0], time[1], time[2], time[3]).toDict()
 
     # Chiusura della connessione
     conn.close()
