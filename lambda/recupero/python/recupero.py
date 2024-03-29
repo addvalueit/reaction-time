@@ -33,25 +33,27 @@ def lambda_handler(event, context):
         port=db_port
     )
     
-    # Inserimento di dati fittizi
-    insert_reaction_time(1, 10.5, conn)  # Esempio di dati fittizi
-    
+    reaction_times = get_all_reaction_times(conn)
+
+    response = {}
+    for i, time in enumerate(reaction_times):
+        response[i] = ReactionTime(time[0], time[1], time[2], time[3]).to_dict()
+
+    # Chiusura della connessione
     conn.close()
 
     return {
         "statusCode": 200,
-        "body": None
+        "body": response
     }
 
-def insert_reaction_time(user_id, reaction_time, db_connection):
+
+def get_all_reaction_times(db_connection):
     try:
         cursor = db_connection.cursor()
-        current_time = datetime.now()
-        cursor.execute("""
-            INSERT INTO reaction_times (time, tms_insert, user_id)
-            VALUES (%s, %s, %s)
-        """, (reaction_time, current_time, user_id))
-        db_connection.commit()
-        print("Dati inseriti correttamente.")
+        cursor.execute("SELECT * FROM reaction_times LIMIT 10")
+        records = cursor.fetchall()
+        return records
     except Exception as e:
-        print("Errore durante l'inserimento dei dati:", e)
+        print("Errore durante il recupero dei dati:", e)
+        return []
