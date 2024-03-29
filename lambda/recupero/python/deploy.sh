@@ -1,19 +1,19 @@
 #!/bin/bash
 
-API_NAME=inserimento_api
+API_NAME=recupero_api
 REGION=us-east-1
 STAGE=test
-LAMBDA_ZIP=../../zips/inserimento.zip
+LAMBDA_ZIP=../../zips/recupero.zip
 RUNTIME=python3.8
-HANDLER=inserimento.lambda_handler
+HANDLER=recupero.lambda_handler
 
-# zip ${LAMBDA_ZIP} inserimento.py my-deployment-package.zip
+# zip ${LAMBDA_ZIP} recupero.py my-deployment-package.zip
 
 #Install packages with pip install --target ./package <packagename>
 #example pip install --target ./package requests
 
 
-# zip -r -g my-deployment-package.zip inserimento.py package
+# zip -r -g my-deployment-package.zip recupero.py package
 
 mv my-deployment-package.zip ${LAMBDA_ZIP}
 
