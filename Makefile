@@ -51,3 +51,8 @@ lambda_build_deploy_recupero_python: lambda_build_recupero_python lambda_deploy_
 
 lambda_buid_deploy_all_pyhton_lambdas: lambda_build_deploy_inserimento_python lambda_build_deploy_recupero_python
 	@echo Done!
+
+run_frontend:
+	@echo Starting frontend...
+	cd frontend && ng serve --open
+	@echo Done!

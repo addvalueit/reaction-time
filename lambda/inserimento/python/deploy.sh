@@ -32,7 +32,8 @@ awslocal lambda create-function \
     --handler ${HANDLER} \
     --memory-size 128 \
     --zip-file fileb://${LAMBDA_ZIP} \
-    --role arn:aws:iam::000000000000:role/dummy-role
+    --role arn:aws:iam::000000000000:role/dummy-role \
+    --environment "Variables={DATABASE_DSN=user=postgres password=password host=postgres port=5432 dbname=reactionTime sslmode=disable}"
 
 [ $? == 0 ] || fail 1 "Failed: AWS / lambda / create-function"
 
