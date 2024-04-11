@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/addvalueit/reaction-time/login/internal/database"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
 	"log/slog"
 	"os"
@@ -29,7 +29,7 @@ func HandleLambdaEvent(ctx context.Context, event *Login) (*Response, error) {
 		return nil, fmt.Errorf("received nil event")
 	}
 
-	conn, err := pgx.Connect(ctx, os.Getenv("DATABASE_DSN"))
+	conn, err := pgxpool.New(ctx, os.Getenv("DATABASE_DSN"))
 	if err != nil {
 		slog.Error(err.Error())
 		return nil, err
@@ -37,7 +37,7 @@ func HandleLambdaEvent(ctx context.Context, event *Login) (*Response, error) {
 
 	slog.Info("Correctly connected to database")
 
-	defer conn.Close(ctx)
+	defer conn.Close()
 
 	queries := database.New(conn)
 
@@ -59,4 +59,5 @@ func HandleLambdaEvent(ctx context.Context, event *Login) (*Response, error) {
 
 func main() {
 	lambda.Start(HandleLambdaEvent)
+
 }
