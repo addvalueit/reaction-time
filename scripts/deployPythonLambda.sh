@@ -1,19 +1,26 @@
 #!/bin/bash
 
-API_NAME=inserimento_api
+LAMBDA_NAME=$1
+API_NAME=$1_api
 REGION=us-east-1
 STAGE=test
-LAMBDA_ZIP=../../zips/inserimento.zip
+LAMBDA_ZIP=../../zips/$1.zip
 RUNTIME=python3.8
-HANDLER=inserimento.lambda_handler
+HANDLER=$1.lambda_handler
 
-# zip ${LAMBDA_ZIP} inserimento.py my-deployment-package.zip
+# zip ${LAMBDA_ZIP} $1.py my-deployment-package.zip
 
 #Install packages with pip install --target ./package <packagename>
 #example pip install --target ./package requests
 
 
-# zip -r -g my-deployment-package.zip inserimento.py package
+#Move into the root directory
+cd ..
+
+#Move into the lambda directory
+cd lambda/$LAMBDA_NAME/python/
+
+# zip -r -g my-deployment-package.zip $1.py package
 
 mv my-deployment-package.zip ${LAMBDA_ZIP}
 

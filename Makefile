@@ -30,7 +30,7 @@ lambda_build_inserimento_python:
 
 lambda_deploy_inserimento_python:
 	@echo Deploying lambda inserimento Python...
-	cd lambda/inserimento/python && bash deploy.sh
+	cd scripts && bash deployPythonLambda.sh inserimento
 	@echo Done!
 
 lambda_build_deploy_inserimento_python: lambda_build_inserimento_python lambda_deploy_inserimento_python
@@ -43,7 +43,7 @@ lambda_build_recupero_python:
 
 lambda_deploy_recupero_python:
 	@echo Deploying lambda recupero Python...
-	cd lambda/recupero/python && bash deploy.sh
+	cd scripts && bash deployPythonLambda.sh recupero
 	@echo Done!
 
 lambda_build_deploy_recupero_python: lambda_build_recupero_python lambda_deploy_recupero_python
@@ -56,7 +56,7 @@ lambda_build_login_python:
 
 lambda_deploy_login_python:
 	@echo Deploying lambda login Python...
-	cd lambda/login/python && bash deploy.sh
+	cd scripts && bash deployPythonLambda.sh login
 	@echo Done!
 
 lambda_build_deploy_login_python: lambda_build_login_python lambda_deploy_login_python
