@@ -59,5 +59,10 @@ run_frontend:
 
 setup:
 	@echo Inizio setup ambiente
-	cd docker && docker compose up
+	cd docker && docker compose up -d
 	@echo Fine setup!
+
+setup_db:
+	@echo Inizio setup db
+	cd docker && ls && docker cp init.sql reaction-time-postgres-1:/init.sql && docker exec -it reaction-time-postgres-1 psql -U postgres --dbname=reactionTime -f init.sql
+	@echo Fine setup db

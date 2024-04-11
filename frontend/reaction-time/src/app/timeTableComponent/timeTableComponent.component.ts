@@ -37,7 +37,7 @@ export class TimeTableComponent implements OnInit {
   ngOnInit() {
     this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/recupero_api/invocations', null).subscribe((data: any[]) => {
         this.response = data;
-        let timeArray = Object.values(this.response.body)
+        let timeArray = Object.values(this.response.body || {});
         this.leaderboard = timeArray.map((item: any) => {
           return {
             name: item.name,

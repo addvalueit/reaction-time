@@ -20,5 +20,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  inserisciTempi() {
+    console.log("inserisciTempi");
+    let data = { "time": 234, "user-id": 0 };
+    this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/inserimento_api/invocations', data).subscribe(() => {
+        console.log("fatto!");
+    })
+  }
+
 }
 
