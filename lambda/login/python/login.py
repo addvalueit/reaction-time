@@ -1,45 +1,38 @@
 import psycopg2
-from datetime import datetime
 import os
 
-class ReactionTime:
-    def __init__(self, id: int, time: int, tms_insert: datetime, user_id: int, name: str):
-        self.id = id
-        self.time = time
-        self.tms_insert = tms_insert
-        self.user_id = user_id
-        self.name = name
+def lambda_handler(event, context):
+    # Extract the user name from the event that triggers the lambda
+    if (event) :
+        print("Evento presente", event)
+    else:
+        return {"statusCode": 200, "body": "No event found"}
+    user_name = event['name']
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "time": self.time,
-            "tms_insert": self.tms_insert.strftime("%Y-%m-%d %H:%M:%S"),
-            "user_id": self.user_id,
-            "name": self.name
+    # Connect to the database using the DSN environment variable
+    with psycopg2.connect(dsn=os.getenv("DATABASE_DSN")) as conn:
+        # Insert the new user into the database
+        insert_user(conn, user_name)
+
+        # Prepare a response indicating success
+        response = {
+            "statusCode": 200,
+            "body": {"message": f"User '{user_name}' inserted successfully."}
         }
 
-def lambda_handler(event, context):
-    response = {}
-    with psycopg2.connect(dsn=os.getenv("DATABASE_DSN")) as conn:
-        reaction_times = get_all_reaction_times(conn)
+    return response
 
-        for i, time in enumerate(reaction_times):
-            response[i] = ReactionTime(time[0], time[1], time[2], time[3], time[4]).to_dict()
-
-
-    return {
-        "statusCode": 200,
-        "body": response
-    }
-
-
-def get_all_reaction_times(db_connection):
+def insert_user(db_connection, name):
     try:
+        # Create a cursor to execute the insert statement
         cursor = db_connection.cursor()
-        cursor.execute("select reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name from reaction_times JOIN users on reaction_times.user_id = users.id")
-        records = cursor.fetchall()
-        return records
+        # SQL statement to insert a new user
+        insert_query = "INSERT INTO users (name) VALUES (%s)"
+        # Execute the insert statement
+        cursor.execute(insert_query, (name,))
+        # Commit the changes to the database
+        db_connection.commit()
     except Exception as e:
-        print("Errore durante il recupero dei dati:", e)
-        return []
+        print("Error during the insertion:", e)
+        # Optionally, handle rollback in case of error
+        db_connection.rollback()
