@@ -25,7 +25,7 @@ localstack_update: lambda_build_inserimento_go lambda_build_login_go
 
 lambda_build_inserimento_python:
 	@echo Building lambda inserimento Python...
-	cd lambda/inserimento/python && bash prepareZip.sh inserimento.py
+	cd scripts && bash preparePythonLambdaZip.sh inserimento
 	@echo Done!
 
 lambda_deploy_inserimento_python:
@@ -38,7 +38,7 @@ lambda_build_deploy_inserimento_python: lambda_build_inserimento_python lambda_d
 
 lambda_build_recupero_python:
 	@echo Building lambda recupero Python...
-	cd lambda/recupero/python && bash prepareZip.sh recupero.py
+	cd scripts && bash preparePythonLambdaZip.sh recupero
 	@echo Done!
 
 lambda_deploy_recupero_python:
@@ -51,7 +51,7 @@ lambda_build_deploy_recupero_python: lambda_build_recupero_python lambda_deploy_
 
 lambda_build_login_python:
 	@echo Building lambda login Python...
-	cd lambda/login/python && bash prepareZip.sh login.py
+	cd scripts && bash preparePythonLambdaZip.sh login
 	@echo Done!
 
 lambda_deploy_login_python:

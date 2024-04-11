@@ -4,7 +4,14 @@
 #example pip install aws-psycopg2 -t ./package 
 
 #Define an argument for the main file
-mainFile=$1
+lambdaname=$1
+mainFile=$lambdaname.py
+
+#Move into the root directory
+cd ..
+
+#Move into the lambda directory
+cd lambda/$lambdaname/python/
 
 #Give a guide if no argument is provided
 if [ -z "$mainFile" ]; then
