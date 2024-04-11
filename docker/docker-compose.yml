@@ -24,6 +24,7 @@ services:
       - ./db-data/pgadmin/:/var/lib/pgadmin
     ports:
       - "5050:80"
+    user: "${UID}:${GID}"
 
   localstack:
     image: localstack/localstack:latest

@@ -1,36 +1,16 @@
-<div class="overflow-x-auto">
-  <table class="table">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- row 1 -->
-      <tr>
-        <th>1</th>
-        <td>Nicholas</td>
-        <td>Senior</td>
-        <td>0.00198ms</td>
-      </tr>
-      <!-- row 2 -->
-      <tr>
-        <th>2</th>
-        <td>Kevin</td>
-        <td>Desktop Support Technician</td>
-        <td>1,3ms</td>
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <th>3</th>
-        <td>Brice Swyre</td>
-        <td>Tax Accountant</td>
-        <td>Red</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table class="table-md">
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Name</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of leaderboard; index as i">
+      <th>{{i+1}}</th>
+      <th>{{item.name}}</th>
+      <td>{{item.time}}</td>
+    </tr>
+  </tbody>
+</table>

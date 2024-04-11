@@ -1,14 +1,14 @@
+let userId;
 document.addEventListener("DOMContentLoaded", function() {
     // Seleziona gli elementi DOM necessari
     const invokeButtons = {
-        inserimento: document.getElementById("invokeButton"),
         recupero: document.getElementById("invokeButtonRecupero"),
         login: document.getElementById("invokeButtonLogin"),
         insert: document.getElementById("invokeButtonInsert")
     };
     const spinner = document.getElementById("spinner");
     const responseContainer = document.getElementById("responseContainer");
-    let userId;
+
 
     // Funzione per gestire le richieste API
     function handleApiRequest(url, requestData) {
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(data => {
             console.log(data);
-            if (data["user-id"]) {
+            if (data && data["user-id"]) {
                 userId = data["user-id"];
             }
             // Visualizza la risposta formattata
@@ -48,11 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
             spinner.classList.add("hidden");
         });
     }
-
-    // Event listener per l'invocazione del primo endpoint
-    invokeButtons.inserimento.addEventListener("click", function() {
-        handleApiRequest('http://localhost:4566/2015-03-31/functions/inserimento_api/invocations', null);
-    });
 
     // Event listener per l'invocazione del secondo endpoint
     invokeButtons.recupero.addEventListener("click", function() {
