@@ -7,10 +7,14 @@
         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
       </svg>
     </span>
-    <input type="text" placeholder="Inserisci il tuo username" class="input input-md input-bordered w-full" />
+    <input [(ngModel)]="userName" type="text" placeholder="Inserisci il tuo username" class="input input-md input-bordered w-full" />
+  </label>
+
+  <label class="label">
+  Logged in as: {{userName}}
   </label>
 
   <div class="flex justify-between mt-4">
-    <button class="btn btn-primary" (click)="insertUser()">Inserisci utente</button>
+    <button class="btn btn-primary" (click)="insertUser(userName)">Inserisci utente</button>
     <button class="btn btn-secondary" (click)="insertTime()">Inserisci tempo</button>
   </div>

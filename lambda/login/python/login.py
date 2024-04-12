@@ -14,13 +14,33 @@ def lambda_handler(event, context):
         # Insert the new user into the database
         insert_user(conn, user_name)
 
+        # Get the user ID
+        user_id = get_user_id(conn, user_name)
+
         # Prepare a response indicating success
         response = {
             "statusCode": 200,
-            "body": {"message": f"User '{user_name}' inserted successfully."}
+            "body": {"message": f"User '{user_name}' inserted successfully.", "user-id": user_id}
         }
 
     return response
+
+def get_user_id(db_connection, name):
+    try:
+        # Create a cursor to execute the select statement
+        cursor = db_connection.cursor()
+        # SQL statement to select a user by name
+        select_query = "SELECT id FROM users WHERE name = %s"
+        # Execute the select statement
+        cursor.execute(select_query, (name,))
+        # Fetch the user ID
+        user_id = cursor.fetchone()[0]
+        return user_id
+    except Exception as e:
+        print("Error during the selection:", e)
+        # Optionally, handle rollback in case of error
+        db_connection.rollback()
+        return None
 
 def insert_user(db_connection, name):
     try:

@@ -4,16 +4,18 @@ import {NgForOf} from "@angular/common";
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [RouterOutlet, NgForOf],
+  imports: [RouterOutlet, NgForOf, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 @Injectable()
 export class LoginComponent implements OnInit {
+  userName: string = "";
 
   constructor(private http: HttpClient) {
   }
