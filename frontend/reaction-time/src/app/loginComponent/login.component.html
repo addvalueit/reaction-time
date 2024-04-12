@@ -1,4 +1,20 @@
-<h1>
-    Login
-</h1>
+<h1 class="text-3xl font-bold mb-4">Login</h1>
 
+<div class="form-control w-full max-w-xs">
+  <label class="input-group input-group-md">
+    <span class="bg-primary text-primary-content">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-6 h-6">
+        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+      </svg>
+    </span>
+    <input [(ngModel)]="userName" type="text" placeholder="Inserisci il tuo username" class="input input-md input-bordered w-full" />
+  </label>
+
+  <label class="label">
+  Logged in as: {{userName}}. The user ID is {{userID}}
+  </label>
+
+  <div class="flex justify-between mt-4">
+    <button class="btn btn-primary" (click)="insertUser(userName)">Inserisci utente</button>
+    <button class="btn btn-secondary" (click)="insertTime()">Inserisci tempo</button>
+  </div>
