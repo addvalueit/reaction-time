@@ -1,6 +1,7 @@
 GOLANG_BINARY_NAME=bootstrap
 INSERIMENTO_NAME=inserimento
 LOGIN_NAME=login
+RECUPERO_NAME=recupero
 
 
 localstack_init:
@@ -18,9 +19,14 @@ lambda_build_login_go:
 	cd lambda/login/go && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bootstrap main.go && zip ${LOGIN_NAME}.zip bootstrap && rm bootstrap && mv ${LOGIN_NAME}.zip ../../zips/${LOGIN_NAME}.zip
 	@echo Done!
 
-localstack_update: lambda_build_inserimento_go lambda_build_login_go
+lambda_build_recupero_java:
+	@echo Building lambda recupero JAVA...
+	cd lambda/recupero/java && mvn clean package && mv target/${RECUPERO_NAME}-1.0.jar ../../zips/${RECUPERO_NAME}.zip
+	@echo Done!
+
+localstack_update: lambda_build_inserimento_go lambda_build_login_go lambda_build_recupero_java
 	@echo Updating localstack
-	cd IAC/pulumi && pulumi up
+	cd IAC/pulumi && export PULUMI_CONFIG_PASSPHRASE="" && pulumi up -s dev -y
 	@echo Done!
 
 lambda_build_inserimento_python:

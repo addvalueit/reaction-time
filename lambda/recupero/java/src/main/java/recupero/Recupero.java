@@ -23,6 +23,8 @@ public class Recupero implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
+
+        System.out.println("Lambda started");
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -37,11 +39,11 @@ public class Recupero implements RequestStreamHandler {
 
             while (resultSet.next()) {
                 ReactionTime reactionTime = new ReactionTime();
-                reactionTime.setId(resultSet.getLong("reaction_times.id"));
-                reactionTime.setTime(resultSet.getLong("reaction_times.time"));
-                reactionTime.setTmsInsert(resultSet.getDate("reaction_times.tms_insert"));
-                reactionTime.setUserId(resultSet.getLong("reaction_times.user_id"));
-                reactionTime.setName(resultSet.getString("users.name"));
+                reactionTime.setId(resultSet.getLong("id"));
+                reactionTime.setTime(resultSet.getLong("time"));
+                reactionTime.setTmsInsert(resultSet.getDate("tms_insert"));
+                reactionTime.setUserId(resultSet.getLong("user_id"));
+                reactionTime.setName(resultSet.getString("name"));
                 reactionTimes.add(reactionTime);
             }
 
@@ -51,13 +53,14 @@ public class Recupero implements RequestStreamHandler {
             close(connection, preparedStatement, resultSet);
         }
 
+        System.out.println("Lambda ended, sending response");
+
         objectMapper.writeValue(outputStream, reactionTimes);
     }
 
     private Connection getConnection() throws SQLException {
 
-        String databaseJdbcUrl = System.getProperty("DATABASE_JDBC_URL", "jdbc:postgresql://postgres:5432/reactionTime?sslmode=disable");
-
+        String databaseJdbcUrl = System.getProperty("DATABASE_JDBC_URL", "jdbc:postgresql://postgres:5432/reactionTime?sslmode=disable&user=postgres&password=password");
 
         DriverManager.registerDriver(new Driver());
 
