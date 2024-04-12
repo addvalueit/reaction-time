@@ -16,6 +16,7 @@ import {FormsModule} from "@angular/forms";
 @Injectable()
 export class LoginComponent implements OnInit {
   userName: string = "";
+  userID: number = 0;
 
   constructor(private http: HttpClient) {
   }
@@ -25,9 +26,10 @@ export class LoginComponent implements OnInit {
 
   insertUser(userName?: string) {
     console.log("inserimento utente in corso...");
-    let data = { "name": userName ? userName : "Nicholas" };
-    this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/login_api/invocations', data).subscribe(() => {
-        console.log("fatto!");
+    let payload = { "name": userName ? userName : "Nicholas" };
+    this.http.post<{ "body": { "user-id": number, "message": string }, "statusCode": number }>('http://localhost:4566/2015-03-31/functions/login_api/invocations', payload).subscribe((data) => {
+      this.userID = data.body["user-id"];
+      console.log("data! ",data, data.body, data.body["user-id"]);
     })
   }
 
