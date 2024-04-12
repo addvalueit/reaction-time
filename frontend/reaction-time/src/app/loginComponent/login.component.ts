@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   insertTime() {
     console.log("inserimento tempo in corso...");
-    let data = { "user-id": 1, "time": 2345 };
+    let data = { "user-id": this.userID, "time": 2345 };
     this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/inserimento_api/invocations', data).subscribe(() => {
         console.log("fatto!");
     })
