@@ -68,7 +68,7 @@ lambda_deploy_login_python:
 lambda_build_deploy_login_python: lambda_build_login_python lambda_deploy_login_python
 	@echo Done!
 
-lambda_buid_deploy_all_pyhton_lambdas: lambda_build_deploy_inserimento_python lambda_build_deploy_recupero_python lambda_build_deploy_login_python
+python_deploy_all_lambdas: lambda_build_deploy_inserimento_python lambda_build_deploy_recupero_python lambda_build_deploy_login_python
 	@echo Done!
 
 run_frontend:
