@@ -1,55 +1,46 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {NgForOf} from "@angular/common";
-import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
+import {ReactionTimeComponent} from '../reactionTimeComponent/reactionTimeComponent.component';
 
 @Component({
   selector: 'time-table',
   standalone: true,
-  imports: [RouterOutlet, NgForOf],
+  imports: [NgForOf, ReactionTimeComponent, NgIf],
   templateUrl: './timeTableComponent.component.html',
   styleUrl: './timeTableComponent.component.css'
 })
-@Injectable()
 export class TimeTableComponent implements OnInit {
-  response: any;
 
-  leaderboard = [
-    {
-      name: "Marcello",
-      time: 0.00198
-    },
-    {
-      name: "Kevin",
-      time: 1.3
-    },
-    {
-      name: "Nicholas",
-      time: 0.001
-    }
-  ]
+  userId!: number;
 
-  constructor(private http: HttpClient) {
+  leaderboard: { name: string, time: number }[] = [];
+
+
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/recupero_api/invocations', null).subscribe((data: any[]) => {
-        this.response = data;
-        let timeArray = Object.values(this.response.body || {});
-        this.leaderboard = timeArray.map((item: any) => {
-          return {
-            name: item.name,
-            time: item.time
-          }
-        })
-      },
-      error => {
-        console.log(error);
-      });
+    this.userId = parseInt(this.route.snapshot.paramMap.get('id')!);
 
+    this.fetchResult();
+    setInterval(() => this.fetchResult(), 3000);
 
   }
+
+  fetchResult() {
+    this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/recupero_api/invocations', null).subscribe(response => {
+        console.log(response);
+        this.leaderboard = response.map(value => {
+          return {
+            name: value.name,
+            time: value.time
+          };
+        });
+      }
+    );
+  }
+
 }
 

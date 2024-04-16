@@ -1,0 +1,31 @@
+<div class="mb-5">
+
+@switch(state) {
+  @case('NOT_STARTED') {
+    <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded" (click)="handleStart()">
+      <div class="text-black font-bold">click to start</div>
+    </div>
+  }
+  @case('STARTED') {
+    <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded" (click)="handleTooSoon()">
+      <div class="text-black font-bold">wait for green</div>
+    </div>
+  }
+  @case('MUST_CLICK') {
+    <div class="h-56 p-2 flex justify-center items-center bg-green-700 rounded"  (click)="handleStop()">
+      <div class="text-black font-bold">press</div>
+    </div>
+  }
+  @case('RESULT') {
+    <div class="h-56 p-2 flex justify-center items-center bg-blue-400 rounded" (click)="handleSendAndStart()">
+      <div class="text-black font-bold">You did it in {{result}}ms</div>
+    </div>
+  }
+  @case('TOO_SOON') {
+    <div class="h-56 p-2 flex justify-center items-center bg-orange-400 rounded" (click)="handleStart()">
+      <div class="text-black font-bold">TOO SOON wait the green!</div>
+    </div>
+  }
+}
+
+</div>

@@ -1,16 +1,20 @@
-<table class="table-md">
-  <thead>
+<reaction-time [userId]="userId" *ngIf="userId"></reaction-time>
+
+<div class="overflow-x-auto h-96">
+  <table class="table table-pin-rows">
+    <thead>
     <tr>
       <th>Position</th>
       <th>Name</th>
       <th>Time</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <tr *ngFor="let item of leaderboard; index as i">
-      <th>{{i+1}}</th>
+      <th>{{i + 1}}</th>
       <th>{{item.name}}</th>
       <td>{{item.time}}</td>
     </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
