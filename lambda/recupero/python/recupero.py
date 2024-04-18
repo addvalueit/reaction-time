@@ -20,24 +20,21 @@ class ReactionTime:
         }
 
 def lambda_handler(event, context):
-    response = {}
+    response = []
     with psycopg2.connect(dsn=os.getenv("DATABASE_DSN")) as conn:
         reaction_times = get_all_reaction_times(conn)
 
         for i, time in enumerate(reaction_times):
-            response[i] = ReactionTime(time[0], time[1], time[2], time[3], time[4]).to_dict()
+            response.append(ReactionTime(time[0], time[1], time[2], time[3], time[4]).to_dict())   #[i] = ReactionTime(time[0], time[1], time[2], time[3], time[4]).to_dict()
 
 
-    return {
-        "statusCode": 200,
-        "body": response
-    }
+    return response
 
 
 def get_all_reaction_times(db_connection):
     try:
         cursor = db_connection.cursor()
-        cursor.execute("select reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name from reaction_times JOIN users on reaction_times.user_id = users.id ORDER BY users.id DESC")
+        cursor.execute("select reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name from reaction_times JOIN users on reaction_times.user_id = users.id ORDER BY reaction_times.time asc, users.id DESC")
         records = cursor.fetchall()
         return records
     except Exception as e:
