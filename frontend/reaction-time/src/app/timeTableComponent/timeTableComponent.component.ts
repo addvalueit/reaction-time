@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
@@ -11,9 +11,10 @@ import {ReactionTimeComponent} from '../reactionTimeComponent/reactionTimeCompon
   templateUrl: './timeTableComponent.component.html',
   styleUrl: './timeTableComponent.component.css'
 })
-export class TimeTableComponent implements OnInit {
+export class TimeTableComponent implements OnInit, OnDestroy {
 
   userId!: number;
+  intervalId: any;
 
   leaderboard: { name: string, time: number }[] = [];
 
@@ -25,8 +26,14 @@ export class TimeTableComponent implements OnInit {
     this.userId = parseInt(this.route.snapshot.paramMap.get('id')!);
 
     this.fetchResult();
-    setInterval(() => this.fetchResult(), 5000);
+    this.intervalId = setInterval(() => this.fetchResult(), 5000);
 
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   fetchResult() {
