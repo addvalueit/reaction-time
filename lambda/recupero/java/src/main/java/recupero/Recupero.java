@@ -19,7 +19,7 @@ import java.util.List;
 public class Recupero implements RequestStreamHandler {
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private static final String GET_REACTION_TIME = "select reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name from reaction_times JOIN users on reaction_times.user_id = users.id";
+    private static final String GET_REACTION_TIME = "select reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name from reaction_times JOIN users on reaction_times.user_id = users.id ORDER BY reaction_times.time ASC";
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {

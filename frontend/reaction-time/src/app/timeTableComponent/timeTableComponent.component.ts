@@ -25,7 +25,7 @@ export class TimeTableComponent implements OnInit {
     this.userId = parseInt(this.route.snapshot.paramMap.get('id')!);
 
     this.fetchResult();
-    setInterval(() => this.fetchResult(), 3000);
+    setInterval(() => this.fetchResult(), 5000);
 
   }
 
