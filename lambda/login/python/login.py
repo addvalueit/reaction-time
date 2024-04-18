@@ -17,13 +17,8 @@ def lambda_handler(event, context):
         # Get the user ID
         user_id = get_user_id(conn, user_name)
 
-        # Prepare a response indicating success
-        response = {
-            "statusCode": 200,
-            "body": {"message": f"User '{user_name}' inserted successfully.", "user-id": user_id}
-        }
-
-    return response
+        # Prepare a response indicating success and the user ID
+        return {"message": f"User '{user_name}' inserted successfully.", "user-id": user_id}
 
 def get_user_id(db_connection, name):
     try:
