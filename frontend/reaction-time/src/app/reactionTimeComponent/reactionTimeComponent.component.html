@@ -1,31 +1,29 @@
 <div class="mb-5">
-
-@switch(state) {
+  @switch(state){
   @case('NOT_STARTED') {
-    <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded" (click)="handleStart()">
-      <div class="text-black font-bold">Clicca per iniziare!</div>
-    </div>
+  <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded-lg hover:bg-red-600 transition-colors duration-300 cursor-pointer" (click)="handleStart()">
+    <div class="text-white font-bold text-xl">Clicca per iniziare!</div>
+  </div>
   }
   @case('STARTED') {
-    <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded" (click)="handleTooSoon()">
-      <div class="text-black font-bold">Aspetta che diventi verde!</div>
-    </div>
+  <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded-lg hover:bg-red-600 transition-colors duration-300 cursor-pointer" (click)="handleTooSoon()">
+    <div class="text-white font-bold text-xl">Aspetta che diventi verde!</div>
+  </div>
   }
   @case('MUST_CLICK') {
-    <div class="h-56 p-2 flex justify-center items-center bg-green-700 rounded"  (click)="handleStop()">
-      <div class="text-black font-bold">Clicca</div>
-    </div>
+  <div class="h-56 p-2 flex justify-center items-center bg-green-700 rounded-lg hover:bg-green-600 transition-colors duration-300 cursor-pointer"  (click)="handleStop()">
+    <div class="text-white font-bold text-xl">Clicca</div>
+  </div>
   }
   @case('RESULT') {
-    <div class="h-56 p-2 flex justify-center items-center bg-blue-400 rounded" (click)="handleSendAndStart()">
-      <div class="text-black font-bold">Il tuo tempo é {{result}}ms</div>
-    </div>
+  <div class="h-56 p-2 flex justify-center items-center bg-blue-500 rounded-lg hover:bg-blue-400 transition-colors duration-300 cursor-pointer" (click)="handleSendAndStart()">
+    <div class="text-white font-bold text-xl">Il tuo tempo é {{result}}ms</div>
+  </div>
   }
   @case('TOO_SOON') {
-    <div class="h-56 p-2 flex justify-center items-center bg-orange-400 rounded" (click)="handleStart()">
-      <div class="text-black font-bold">Troppo veloce! aspetta il verde</div>
-    </div>
+  <div class="h-56 p-2 flex justify-center items-center bg-orange-500 rounded-lg hover:bg-orange-400 transition-colors duration-300 cursor-pointer" (click)="handleStart()">
+    <div class="text-white font-bold text-xl">Troppo veloce! Aspetta il verde</div>
+  </div>
   }
-}
-
+  }
 </div>
