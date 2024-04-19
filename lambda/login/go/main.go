@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/addvalueit/reaction-time/login/internal/database"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -15,12 +16,23 @@ type Login struct {
 	Name string `json:"name"`
 }
 
+type ApiGatewayResponse struct {
+	StatusCode int `json:"statusCode"`
+	Headers    struct {
+		ContentType string `json:"Content-Type"`
+	} `json:"headers"`
+	IsBase64Encoded   bool `json:"isBase64Encoded"`
+	MultiValueHeaders struct {
+		XCustomHeader []string `json:"X-Custom-Header"`
+	} `json:"multiValueHeaders"`
+	Body string `json:"body"`
+}
 type Response struct {
 	Name   string `json:"name"`
 	UserId int64  `json:"user-id"`
 }
 
-func HandleLambdaEvent(ctx context.Context, event *Login) (*Response, error) {
+func HandleLambdaEvent(ctx context.Context, event *Login) (*ApiGatewayResponse, error) {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
@@ -54,7 +66,26 @@ func HandleLambdaEvent(ctx context.Context, event *Login) (*Response, error) {
 		return nil, err
 	}
 
-	return &Response{UserId: user.ID, Name: user.Name}, nil
+	resp := Response{
+		Name:   user.Name,
+		UserId: user.ID,
+	}
+
+	b, err := json.Marshal(resp)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	fmt.Println(string(b))
+
+	return &ApiGatewayResponse{
+		StatusCode: 200,
+		Headers: struct {
+			ContentType string `json:"Content-Type"`
+		}(struct{ ContentType string }{ContentType: "application/json"}),
+		IsBase64Encoded: false,
+		Body:            string(b),
+	}, nil
 }
 
 func main() {
