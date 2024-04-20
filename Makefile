@@ -31,12 +31,12 @@ localstack_update: lambda_build_inserimento_go lambda_build_login_go lambda_buil
 
 lambda_build_inserimento_python:
 	@echo Building lambda inserimento Python...
-	cd scripts && bash preparePythonLambdaZip.sh inserimento
+	cd IAC && bash preparePythonLambdaZip.sh inserimento
 	@echo Done!
 
 lambda_deploy_inserimento_python:
 	@echo Deploying lambda inserimento Python...
-	cd scripts && bash deployPythonLambda.sh inserimento
+	cd IAC && bash deployPythonLambda.sh inserimento
 	@echo Done!
 
 lambda_build_deploy_inserimento_python: lambda_build_inserimento_python lambda_deploy_inserimento_python
@@ -44,12 +44,12 @@ lambda_build_deploy_inserimento_python: lambda_build_inserimento_python lambda_d
 
 lambda_build_recupero_python:
 	@echo Building lambda recupero Python...
-	cd scripts && bash preparePythonLambdaZip.sh recupero
+	cd IAC && bash preparePythonLambdaZip.sh recupero
 	@echo Done!
 
 lambda_deploy_recupero_python:
 	@echo Deploying lambda recupero Python...
-	cd scripts && bash deployPythonLambda.sh recupero
+	cd IAC && bash deployPythonLambda.sh recupero
 	@echo Done!
 
 lambda_build_deploy_recupero_python: lambda_build_recupero_python lambda_deploy_recupero_python
@@ -57,12 +57,12 @@ lambda_build_deploy_recupero_python: lambda_build_recupero_python lambda_deploy_
 
 lambda_build_login_python:
 	@echo Building lambda login Python...
-	cd scripts && bash preparePythonLambdaZip.sh login
+	cd IAC && bash preparePythonLambdaZip.sh login
 	@echo Done!
 
 lambda_deploy_login_python:
 	@echo Deploying lambda login Python...
-	cd scripts && bash deployPythonLambda.sh login
+	cd IAC && bash deployPythonLambda.sh login
 	@echo Done!
 
 lambda_build_deploy_login_python: lambda_build_login_python lambda_deploy_login_python
@@ -79,12 +79,8 @@ run_frontend:
 setup:
 	@echo Inizio setup ambiente
 	cd docker && docker compose up -d
-	@echo Fine setup!
-
-setup_db:
-	@echo Inizio setup db
 	cd docker && ls && docker cp init.sql reaction-time-postgres-1:/init.sql && docker exec -it reaction-time-postgres-1 psql -U postgres --dbname=reactionTime -f init.sql
-	@echo Fine setup db
+	@echo Fine setup!
 
 build_frontend_from_windows:
 	@echo Starting to build frontend...

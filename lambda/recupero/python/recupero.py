@@ -34,7 +34,7 @@ def lambda_handler(event, context):
 def get_all_reaction_times(db_connection):
     try:
         cursor = db_connection.cursor()
-        cursor.execute("select reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name from reaction_times JOIN users on reaction_times.user_id = users.id ORDER BY reaction_times.time asc, users.id DESC")
+        cursor.execute("SELECT reaction_times.id, reaction_times.time, reaction_times.tms_insert, reaction_times.user_id, users.name FROM reaction_times JOIN users ON reaction_times.user_id = users.id WHERE (reaction_times.user_id, reaction_times.time) IN (SELECT user_id, MIN(time) FROM reaction_times GROUP BY user_id) ORDER BY reaction_times.time ASC;")
         records = cursor.fetchall()
         return records
     except Exception as e:
