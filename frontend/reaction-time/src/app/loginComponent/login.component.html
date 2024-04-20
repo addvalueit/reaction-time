@@ -1,9 +1,12 @@
-<div class="form-control w-full max-w-xs flex items-center justify-center">
-  <h1 class="text-3xl font-bold mb-4">Login</h1>
+<div class="flex items-center justify-center h-screen">
+  <div class="form-control w-full max-w-xs">
+    <h1 class="text-3xl font-bold text-center text-purple-500 mb-4">Login</h1>
 
-  <input [(ngModel)]="userName" type="text" placeholder="Inserisci il tuo username"
-         class="input input-md input-bordered w-full"/>
+    <div class="card bg-gray-800 p-5 rounded-lg shadow-lg">
+      <input [(ngModel)]="userName" type="text" placeholder="Inserisci il tuo username"
+             class="input input-md input-bordered w-full mb-4"/>
 
-  <button class="btn btn-primary mt-5" (click)="insertUser(userName)">Fai il login</button>
-
+      <button class="btn btn-primary mb-4" (click)="insertUser(userName)">Fai il login</button>
+    </div>
+  </div>
 </div>

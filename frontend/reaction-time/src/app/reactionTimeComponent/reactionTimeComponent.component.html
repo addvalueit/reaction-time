@@ -1,31 +1,25 @@
-<div class="mb-5">
-
-@switch(state) {
-  @case('NOT_STARTED') {
-    <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded" (click)="handleStart()">
-      <div class="text-black font-bold">click to start</div>
-    </div>
-  }
-  @case('STARTED') {
-    <div class="h-56 p-2 flex justify-center items-center bg-red-700 rounded" (click)="handleTooSoon()">
-      <div class="text-black font-bold">wait for green</div>
-    </div>
-  }
-  @case('MUST_CLICK') {
-    <div class="h-56 p-2 flex justify-center items-center bg-green-700 rounded"  (click)="handleStop()">
-      <div class="text-black font-bold">press</div>
-    </div>
-  }
-  @case('RESULT') {
-    <div class="h-56 p-2 flex justify-center items-center bg-blue-400 rounded" (click)="handleSendAndStart()">
-      <div class="text-black font-bold">You did it in {{result}}ms</div>
-    </div>
-  }
-  @case('TOO_SOON') {
-    <div class="h-56 p-2 flex justify-center items-center bg-orange-400 rounded" (click)="handleStart()">
-      <div class="text-black font-bold">TOO SOON wait the green!</div>
-    </div>
-  }
-}
-
+<div class="h-[29vh] mb-5" >
+  <div [ngClass]="{
+    'bg-red-700': state === 'STARTED',
+    'bg-red-800 to-red-600 hover:bg-red-600': state === 'NOT_STARTED' || state === 'TOO_SOON',
+    'bg-green-800 to-green-600 hover:bg-green-600': state === 'MUST_CLICK',
+    'bg-blue-800 to-blue-600 hover:bg-blue-400': state === 'RESULT',
+    'bg-orange-800 to-orange-600 hover:bg-orange-400': state === 'TOO_SOON'
+  }" class="h-56 p-2 flex justify-center items-center rounded-lg transition-colors duration-300 cursor-pointer" (click)="handleClick(state)">
+    <ng-container *ngIf="state === 'NOT_STARTED'">
+      <div class="text-white font-bold text-xl">Clicca per iniziare!</div>
+    </ng-container>
+    <ng-container *ngIf="state === 'STARTED'">
+      <div class="text-white font-bold text-xl">Aspetta che diventi verde!</div>
+    </ng-container>
+    <ng-container *ngIf="state === 'MUST_CLICK'">
+      <div class="text-white font-bold text-xl">Clicca</div>
+    </ng-container>
+    <ng-container *ngIf="state === 'RESULT'">
+      <div class="text-white font-bold text-xl">Il tuo tempo é {{result}}ms</div>
+    </ng-container>
+    <ng-container *ngIf="state === 'TOO_SOON'">
+      <div class="text-white font-bold text-xl">Troppo veloce! Aspetta il verde</div>
+    </ng-container>
+  </div>
 </div>

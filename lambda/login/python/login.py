@@ -11,11 +11,20 @@ def lambda_handler(event, context):
 
     # Connect to the database using the DSN environment variable
     with psycopg2.connect(dsn=os.getenv("DATABASE_DSN")) as conn:
+
+        # Get the user ID
+        user_id = get_user_id(conn, user_name)
+
         # Insert the new user into the database
+        if user_id:
+            # User already exists
+            return {"message": f"User '{user_name}' already exists.", "user-id": user_id}
+
         insert_user(conn, user_name)
 
         # Get the user ID
         user_id = get_user_id(conn, user_name)
+
 
         # Prepare a response indicating success and the user ID
         return {"message": f"User '{user_name}' inserted successfully.", "user-id": user_id}

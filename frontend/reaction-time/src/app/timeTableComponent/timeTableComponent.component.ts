@@ -19,7 +19,6 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
   leaderboard: { name: string, time: number }[] = [];
 
-
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
 
@@ -35,6 +34,20 @@ export class TimeTableComponent implements OnInit, OnDestroy {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
+  }
+
+  topNLeaderboard(n: number) {
+    let playerNames = [...new Set(this.leaderboard.map(value => value.name))];
+
+    let topTimeForPlayer: { name: string, time: number }[] = [];
+
+    for (let i = 0; i < playerNames.length; i++) {
+      let playerTimes: number[] = this.leaderboard.filter(value => value.name === playerNames[i]).map(value => value.time);
+      let bestTime = Math.min(...playerTimes);
+      topTimeForPlayer = [...topTimeForPlayer, {name: playerNames[i], time: bestTime}];
+    }
+
+    return topTimeForPlayer.sort((a, b) => a.time - b.time).slice(0, n);
   }
 
   fetchResult() {

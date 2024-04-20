@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {NgIf, NgStyle} from '@angular/common';
+import {NgClass, NgIf, NgStyle} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
@@ -10,7 +10,8 @@ import {environment} from '../../environments/environment';
   templateUrl: './reactionTimeComponent.component.html',
   imports: [
     NgStyle,
-    NgIf
+    NgIf,
+    NgClass
   ],
   styleUrl: './reactionTimeComponent.component.css'
 })
@@ -69,4 +70,17 @@ export class ReactionTimeComponent {
     });
   }
 
+  handleClick(state: "NOT_STARTED" | "STARTED" | "MUST_CLICK" | "TOO_SOON" | "RESULT") {
+    if (state === 'NOT_STARTED') {
+      this.handleStart();
+    } else if (state === 'STARTED') {
+      this.handleTooSoon();
+    } else if (state === 'MUST_CLICK') {
+      this.handleStop();
+    } else if (state === 'RESULT') {
+      this.handleSendAndStart();
+    } else if (state === 'TOO_SOON') {
+      this.handleStart();
+    }
+  }
 }
