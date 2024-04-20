@@ -4,11 +4,6 @@ LOGIN_NAME=login
 RECUPERO_NAME=recupero
 
 
-localstack_init:
-	@echo Starting localstack and all of its components...
-	cd docker && docker compose up -d
-	@echo Done!
-
 lambda_build_inserimento_go:
 	@echo Building lambda inserimento GO...
 	cd lambda/inserimento/go && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags lambda.norpc -o bootstrap main.go && zip ${INSERIMENTO_NAME}.zip bootstrap && rm bootstrap && mv ${INSERIMENTO_NAME}.zip ../../zips/${INSERIMENTO_NAME}.zip
@@ -29,47 +24,29 @@ localstack_update: lambda_build_inserimento_go lambda_build_login_go lambda_buil
 	cd IAC/pulumi && export PULUMI_CONFIG_PASSPHRASE="" && pulumi up -s dev -y
 	@echo Done!
 
-lambda_build_inserimento_python:
+lambda_build_deploy_inserimento_python:
 	@echo Building lambda inserimento Python...
 	cd IAC && bash preparePythonLambdaZip.sh inserimento
-	@echo Done!
-
-lambda_deploy_inserimento_python:
 	@echo Deploying lambda inserimento Python...
 	cd IAC && bash deployPythonLambda.sh inserimento
 	@echo Done!
 
-lambda_build_deploy_inserimento_python: lambda_build_inserimento_python lambda_deploy_inserimento_python
-	@echo Done!
-
-lambda_build_recupero_python:
+lambda_build_deploy_recupero_python:
 	@echo Building lambda recupero Python...
 	cd IAC && bash preparePythonLambdaZip.sh recupero
-	@echo Done!
-
-lambda_deploy_recupero_python:
 	@echo Deploying lambda recupero Python...
 	cd IAC && bash deployPythonLambda.sh recupero
 	@echo Done!
 
-lambda_build_deploy_recupero_python: lambda_build_recupero_python lambda_deploy_recupero_python
-	@echo Done!
-
-lambda_build_login_python:
+lambda_build_deploy_login_python:
 	@echo Building lambda login Python...
 	cd IAC && bash preparePythonLambdaZip.sh login
-	@echo Done!
-
-lambda_deploy_login_python:
 	@echo Deploying lambda login Python...
 	cd IAC && bash deployPythonLambda.sh login
 	@echo Done!
 
-lambda_build_deploy_login_python: lambda_build_login_python lambda_deploy_login_python
-	@echo Done!
-
 python_deploy_all_lambdas: lambda_build_deploy_inserimento_python lambda_build_deploy_recupero_python lambda_build_deploy_login_python
-	@echo Done!
+	@echo Lambda deployate!
 
 run_frontend:
 	@echo Starting frontend...
@@ -79,6 +56,7 @@ run_frontend:
 setup:
 	@echo Inizio setup ambiente
 	cd docker && docker compose up -d
+	@echo Inizio creazione tabelle
 	cd docker && ls && docker cp init.sql reaction-time-postgres-1:/init.sql && docker exec -it reaction-time-postgres-1 psql -U postgres --dbname=reactionTime -f init.sql
 	@echo Fine setup!
 
