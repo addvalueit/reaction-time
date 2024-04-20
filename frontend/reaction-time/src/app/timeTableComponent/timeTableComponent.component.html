@@ -1,22 +1,26 @@
 <reaction-time [userId]="userId" *ngIf="userId"></reaction-time>
 
-<div class="bg-gray-800 text-white p-5 rounded-lg shadow-lg" style="max-height: 90vh; overflow-y: auto;">
-  <h1 class="text-3xl font-bold text-center text-purple-500 mb-4">
-    Top 10
-  </h1>
+<h1 class="text-3xl font-bold text-center text-purple-500 mb-4">
+  Top 10
+</h1>
+
+<div class="h-[50vh] bg-gray-900 text-white p-5 rounded-lg shadow-lg" style="max-height: 90vh; overflow-y: auto;">
   <ol class="list-decimal pl-5">
-    <li *ngFor="let item of topNLeaderboard(10); index as i" class="flex justify-between items-center bg-gray-700 rounded-lg p-3 m-2 hover:bg-gray-600">
+    <li *ngFor="let item of topNLeaderboard(10); index as i" class="flex justify-between items-center bg-gray-800 rounded-lg p-3 m-2 hover:bg-gray-700 transition-colors">
       <div class="flex items-center">
-        <div class="badge badge-primary mr-2">{{i + 1}}</div>
-        <mark class="bg-purple-300 text-purple-800 font-semibold p-1 rounded">{{item.name}}</mark>
+        <div class="badge bg-neutral-focus text-neutral-content mr-2">{{ i == 0 ? '🥇' : i == 1 ? '🥈' : i == 2 ? '🥉' : '' }}{{ i + 1 }}</div>
+        <span class="font-semibold p-1 rounded">{{item.name}}</span>
       </div>
       <div class="flex items-center">
-        <progress class="progress progress-warning w-56" value="{{item.time}}" max="{{maxTopNLeaderboardTime(10)}}"></progress>
         <small class="text-gray-300 ml-2">{{item.time}} ms</small>
       </div>
     </li>
   </ol>
 </div>
 
-<!-- Logout Button -->
-<a href="http://localhost:4200/time-table" class="btn btn-accent btn-block">Logout</a>
+
+
+
+<a href="http://localhost:4200/time-table" class="btn btn-accent btn-block btn-outline hover:bg-accent-focus hover:text-white transition ease-in-out duration-300">
+  Logout
+</a>
