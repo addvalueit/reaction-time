@@ -85,3 +85,13 @@ setup_db:
 	@echo Inizio setup db
 	cd docker && ls && docker cp init.sql reaction-time-postgres-1:/init.sql && docker exec -it reaction-time-postgres-1 psql -U postgres --dbname=reactionTime -f init.sql
 	@echo Fine setup db
+
+build_frontend_from_windows:
+	@echo Starting to build frontend...
+	cd frontend/reaction-time && rm -r node_modules && npm install && npm run build && cd dist/reaction-time/browser && zip -r ../../../../zips/reaction-time-fe.zip .
+	@echo Done!
+
+build_frontend:
+	@echo Starting to build frontend...
+	cd frontend/reaction-time && npm run build && cd dist/reaction-time/browser && zip -r ../../../../zips/reaction-time-fe.zip .
+	@echo Done!
