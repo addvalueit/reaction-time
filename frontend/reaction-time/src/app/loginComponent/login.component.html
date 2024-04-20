@@ -4,7 +4,7 @@
 
     <div class="card bg-gray-800 p-5 rounded-lg shadow-lg">
       <input [(ngModel)]="userName" type="text" placeholder="Inserisci il tuo username"
-             class="input input-md input-bordered w-full mb-4"/>
+             class="input input-md input-bordered w-full mb-4" maxlength="20"/>
 
       <button class="btn btn-primary mb-4" (click)="insertUser(userName)">Fai il login</button>
     </div>

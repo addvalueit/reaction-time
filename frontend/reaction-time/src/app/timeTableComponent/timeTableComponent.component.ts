@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {ReactionTimeComponent} from '../reactionTimeComponent/reactionTimeComponent.component';
@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
 @Component({
   selector: 'time-table',
   standalone: true,
-  imports: [NgForOf, ReactionTimeComponent, NgIf],
+  imports: [NgForOf, ReactionTimeComponent, NgIf, RouterLink],
   templateUrl: './timeTableComponent.component.html',
   styleUrl: './timeTableComponent.component.css'
 })
