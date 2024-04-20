@@ -11,12 +11,12 @@ localstack_init:
 
 lambda_build_inserimento_go:
 	@echo Building lambda inserimento GO...
-	cd lambda/inserimento/go && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bootstrap main.go && zip ${INSERIMENTO_NAME}.zip bootstrap && rm bootstrap && mv ${INSERIMENTO_NAME}.zip ../../zips/${INSERIMENTO_NAME}.zip
+	cd lambda/inserimento/go && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags lambda.norpc -o bootstrap main.go && zip ${INSERIMENTO_NAME}.zip bootstrap && rm bootstrap && mv ${INSERIMENTO_NAME}.zip ../../zips/${INSERIMENTO_NAME}.zip
 	@echo Done!
 
 lambda_build_login_go:
 	@echo Building lambda inserimento GO...
-	cd lambda/login/go && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bootstrap main.go && zip ${LOGIN_NAME}.zip bootstrap && rm bootstrap && mv ${LOGIN_NAME}.zip ../../zips/${LOGIN_NAME}.zip
+	cd lambda/login/go && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags lambda.norpc -o bootstrap main.go && zip ${LOGIN_NAME}.zip bootstrap && rm bootstrap && mv ${LOGIN_NAME}.zip ../../zips/${LOGIN_NAME}.zip
 	@echo Done!
 
 lambda_build_recupero_java:

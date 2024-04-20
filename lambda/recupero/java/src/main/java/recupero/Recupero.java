@@ -60,7 +60,7 @@ public class Recupero implements RequestStreamHandler {
 
     private Connection getConnection() throws SQLException {
 
-        String databaseJdbcUrl = System.getProperty("DATABASE_JDBC_URL", "jdbc:postgresql://postgres:5432/reactionTime?sslmode=disable&user=postgres&password=password");
+        String databaseJdbcUrl = System.getenv("DATABASE_JDBC_URL");
 
         DriverManager.registerDriver(new Driver());
 
