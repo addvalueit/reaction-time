@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {NgForOf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {environment} from '../../environments/environment';
+
 
 @Component({
   selector: 'login',
@@ -22,7 +24,7 @@ export class LoginComponent {
     console.log('inserimento utente in corso...');
     let payload = {'name': userName ? userName : 'Nicholas'};
     this.http.post<{ 'user-id': number, 'message': string }>(
-      'http://localhost:4566/2015-03-31/functions/login_api/invocations', payload)
+      environment.loginUrl, payload)
       .subscribe((data) => {
         const userID = data['user-id'];
         console.log('data! ', data);

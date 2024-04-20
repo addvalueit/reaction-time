@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {ReactionTimeComponent} from '../reactionTimeComponent/reactionTimeComponent.component';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'time-table',
@@ -37,7 +38,7 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   }
 
   fetchResult() {
-    this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/recupero_api/invocations', null).subscribe(response => {
+    this.http.post<any[]>(environment.recuperoUrl, null).subscribe(response => {
         console.log(response);
         this.leaderboard = response.map(value => {
           return {

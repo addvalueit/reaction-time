@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {NgIf, NgStyle} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class ReactionTimeComponent {
   insertTime() {
     console.log('inserimento tempo in corso...');
     let data = {'user-id': this.userId, 'time': this.result};
-    this.http.post<any[]>('http://localhost:4566/2015-03-31/functions/inserimento_api/invocations', data).subscribe(() => {
+    this.http.post<any[]>(environment.inserimentoUrl, data).subscribe(() => {
       console.log('fatto!');
     });
   }
