@@ -8,7 +8,9 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-docker",
+				"cweijan.vscode-mysql-client2",
+				"vscjava.vscode-java-pack"
 			]
 		}
 	},

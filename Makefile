@@ -26,7 +26,7 @@ lambda_build_recupero_java:
 
 localstack_update: lambda_build_inserimento_go lambda_build_login_go lambda_build_recupero_java
 	@echo Updating localstack
-	cd IAC/pulumi && export PULUMI_CONFIG_PASSPHRASE="" && pulumi login --local && yes '' | pulumi up -s dev -y
+	cd IAC/pulumi && export PULUMI_CONFIG_PASSPHRASE="" && pulumi login --local && pulumi up -s dev -y
 	@echo Done!
 
 lambda_build_inserimento_python:
@@ -97,4 +97,4 @@ build_frontend:
 	@echo Done!
 
 
-setup: localstack_init install_pulumi localstack_update setup_db run_frontend
+setup: localstack_init localstack_update setup_db run_frontend
