@@ -3,7 +3,11 @@
 	"features": {
 		"ghcr.io/audacioustux/devcontainers/localstack:1": {},
 		"ghcr.io/flexwie/devcontainer-features/pulumi:1": {},
-		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {}
+		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {},
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "17",
+			"installMaven": true
+		}
 	},
 	"customizations": {
 		"vscode": {
