@@ -14,5 +14,19 @@
 			]
 		}
 	},
-	"postCreateCommand": "make setup"
+	"forwardPorts": [4200, 4566],
+	"portsAttributes": {
+		"4566": {
+			"label": "lambda",
+			"visibility": "public",
+			"requireLocalPort": true,
+			"onAutoForward": "notify"
+		},
+		"4200": {
+			"label": "frontend",
+			"visibility": "public",
+			"requireLocalPort": true,
+			"onAutoForward": "openBrowser"
+		}
+	}
 }

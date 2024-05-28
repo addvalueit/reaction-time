@@ -73,7 +73,7 @@ python_deploy_all_lambdas: lambda_build_deploy_inserimento_python lambda_build_d
 
 run_frontend:
 	@echo Starting frontend...
-	cd frontend/reaction-time && npm install && npm run start
+	cd frontend/reaction-time && npm install && npm run start-dev
 	@echo Done!
 
 install_pulumi:
@@ -97,4 +97,9 @@ build_frontend:
 	@echo Done!
 
 
-setup: localstack_init localstack_update setup_db run_frontend
+modify_port:
+	@echo modifying port of frontend!!!
+	chmod +x modify-localhost.sh && ./modify-localhost.sh
+	@echo Done!
+
+setup: localstack_init localstack_update setup_db modify_port run_frontend
