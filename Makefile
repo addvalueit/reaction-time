@@ -6,7 +6,7 @@ RECUPERO_NAME=recupero
 
 localstack_init:
 	@echo Starting localstack and all of its components...
-	cd docker && docker compose up -d
+	docker logout && cd docker && docker compose up -d
 	@echo Done!
 
 lambda_build_inserimento_go:
@@ -26,7 +26,7 @@ lambda_build_recupero_java:
 
 localstack_update: lambda_build_inserimento_go lambda_build_login_go lambda_build_recupero_java
 	@echo Updating localstack
-	cd IAC/pulumi && export PULUMI_CONFIG_PASSPHRASE="" && pulumi up -s dev -y
+	cd IAC/pulumi && export PULUMI_CONFIG_PASSPHRASE="" && pulumi login --local && yes '' | pulumi up -s dev -y
 	@echo Done!
 
 lambda_build_inserimento_python:
@@ -73,13 +73,13 @@ python_deploy_all_lambdas: lambda_build_deploy_inserimento_python lambda_build_d
 
 run_frontend:
 	@echo Starting frontend...
-	cd frontend/reaction-time && ng serve --open --live-reload
+	cd frontend/reaction-time && npm install && npm run start
 	@echo Done!
 
-setup:
-	@echo Inizio setup ambiente
-	cd docker && docker compose up -d
-	@echo Fine setup!
+install_pulumi:
+	@echo Installing pulumi...
+	curl -fsSL https://get.pulumi.com | sh && export PATH=$PATH:/home/codespace/.pulumi/bin
+	@echo Done!
 
 setup_db:
 	@echo Inizio setup db
@@ -95,3 +95,6 @@ build_frontend:
 	@echo Starting to build frontend...
 	cd frontend/reaction-time && npm run build && cd dist/reaction-time/browser && zip -r ../../../../zips/reaction-time-fe.zip .
 	@echo Done!
+
+
+setup: localstack_init install_pulumi localstack_update setup_db run_frontend
