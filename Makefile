@@ -98,8 +98,13 @@ build_frontend:
 
 
 modify_port:
-	@echo modifying port of frontend!!!
+	@echo Modifying port of frontend!!!
 	chmod +x modify-localhost.sh && ./modify-localhost.sh
 	@echo Done!
 
-setup: localstack_init localstack_update setup_db modify_port run_frontend
+intall_awslocal:
+	@echo Installing aws local
+	pip install awscli-local
+	@echo Done!
+
+setup: localstack_init localstack_update setup_db modify_port intall_awslocal run_frontend
