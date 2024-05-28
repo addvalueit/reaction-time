@@ -1,7 +1,9 @@
 {
 	"image": "mcr.microsoft.com/devcontainers/universal:2",
 	"features": {
-		"ghcr.io/audacioustux/devcontainers/localstack:1": {}
+		"ghcr.io/audacioustux/devcontainers/localstack:1": {},
+		"ghcr.io/flexwie/devcontainer-features/pulumi:1": {},
+		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {}
 	},
 	"customizations": {
 		"vscode": {
@@ -10,5 +12,5 @@
 			]
 		}
 	},
-	"postCreateCommand": "cd docker && docker compose up"
+	"postCreateCommand": "make setup"
 }
